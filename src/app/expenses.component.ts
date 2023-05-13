@@ -9,12 +9,19 @@ export class ExpensesComponent {
 
   private expensesService : ExpenseService;
 
+  public expenses : Expense[] = [];
+
   constructor(expensesService: ExpenseService) {
     this.expensesService = expensesService;
+
+    this.getExpenses();
   }
 
-  public getExpenses() : Expense[] {
-    return this.expensesService.getExpenses();
+  public getExpenses() {
+    return this.expensesService.getExpenses()
+    .subscribe(expenses => {
+      this.expenses = expenses;
+    });
   }
 
 }
