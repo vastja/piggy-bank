@@ -7,18 +7,18 @@ import { ExpenseService, Expense } from './services/expense.service';
 })
 export class ExpensesComponent {
 
-  private expensesService : ExpenseService;
+  private expenseService : ExpenseService;
 
   public expenses : Expense[] = [];
 
-  constructor(expensesService: ExpenseService) {
-    this.expensesService = expensesService;
+  constructor(expensesService : ExpenseService) {
+    this.expenseService = expensesService;
 
     this.getExpenses();
   }
 
   public getExpenses() {
-    return this.expensesService.getExpenses()
+    return this.expenseService.getExpenses()
     .subscribe(expenses => {
       this.expenses = expenses;
     });

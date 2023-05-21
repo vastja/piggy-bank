@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ExpenseService } from './services/expense.service';
+import { ExpenseService, RemoteExpenseService } from './services/expense.service';
 import { ExpensesComponent } from './expenses.component';
 
 @NgModule({
@@ -17,7 +17,7 @@ import { ExpensesComponent } from './expenses.component';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [ExpenseService],
+  providers: [ {provide: ExpenseService, useClass: RemoteExpenseService}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
