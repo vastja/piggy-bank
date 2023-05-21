@@ -1,0 +1,12 @@
+<table>
+    <thead>
+        <tr>
+            <th>Tag</th>
+            <th>Amount</th>
+        </tr>
+        <tr *ngFor="let expense of expenses">
+            <th>{{ expense.tag }}</th>
+            <th>{{ expense.amount }}</th>
+        </tr>
+    </thead>
+</table>
