@@ -1,5 +1,5 @@
 import { TestBed } from "@angular/core/testing";
-import { ExpenseService, TestExpenseService } from "./services/expense.service";
+import { ExpenseService, TestExpenseService } from "../services/expense.service";
 import { ExpensesComponent } from "./expenses.component";
 
 describe('Expenses component', () => {

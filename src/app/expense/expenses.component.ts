@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ExpenseService, Expense } from './services/expense.service';
+import { ExpenseService, Expense } from '../services/expense.service';
 
 @Component({
   selector: 'app-expenses',
