@@ -5,19 +5,27 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ExpenseService, RemoteExpenseService } from './services/expense.service';
-import { ExpensesComponent } from './expenses.component';
+import { ExpensesComponent } from './expense/expenses.component';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddExpenseComponent } from './expense/add-expense.componet';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ExpensesComponent
+    ExpensesComponent,
+    AddExpenseComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [ {provide: ExpenseService, useClass: RemoteExpenseService}],
+  providers: [
+    {provide: ExpenseService, useClass: RemoteExpenseService},
+    FormBuilder
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
