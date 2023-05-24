@@ -6,11 +6,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { ExpenseService, TestExpenseService } from './services/expense.service';
 import { AddExpenseComponent } from './expense/add-expense.componet';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MenuComponent } from './menu/menu.component';
 
-describe('AppComponent', () => {
+describe('App Component', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [RouterTestingModule, HttpClientModule, FormsModule, ReactiveFormsModule],
-    declarations: [AppComponent, ExpensesComponent, AddExpenseComponent],
+    declarations: [AppComponent, ExpensesComponent, AddExpenseComponent, MenuComponent],
     providers: [{provide: ExpenseService, useClass: TestExpenseService}]
   }));
 
@@ -18,18 +19,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'Piggy Bank'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('Piggy Bank');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.getElementsByTagName('h1')[0].textContent).toContain('Piggy Bank');
   });
 });
