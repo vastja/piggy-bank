@@ -1,0 +1,19 @@
+table {
+    width: 75%;
+    margin: 1% auto 1% auto;
+    border-collapse: collapse;
+}
+
+tr {
+    border-bottom: solid cornflowerblue 2px;
+}
+
+thead tr th {
+    font-weight: bold;
+    font-size: x-large;
+}
+
+th {
+    text-align: left;
+    font-weight: normal;
+}

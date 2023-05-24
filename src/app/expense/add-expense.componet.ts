@@ -4,7 +4,8 @@ import { ExpenseService } from '../services/expense.service';
 
 @Component({
   selector: 'app-add-expense',
-  templateUrl: './add-expense.component.html'
+  templateUrl: './add-expense.component.html',
+  styleUrls: ['./add-expense.component.css']
 })
 export class AddExpenseComponent {
 

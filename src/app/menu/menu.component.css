@@ -1,0 +1,10 @@
+:host {
+    height: 100%;
+    flex-grow: 1;
+    background-color: var(--main-theme-color);
+}
+
+h1 {
+    text-align: center;
+    color: white;
+}

@@ -8,12 +8,14 @@ import { ExpenseService, RemoteExpenseService } from './services/expense.service
 import { ExpensesComponent } from './expense/expenses.component';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddExpenseComponent } from './expense/add-expense.componet';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ExpensesComponent,
-    AddExpenseComponent
+    AddExpenseComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
