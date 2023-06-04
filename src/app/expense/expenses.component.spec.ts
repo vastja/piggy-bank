@@ -20,5 +20,6 @@ describe('Expenses component', () => {
         const compiled = fixture.nativeElement as HTMLElement;
         expect(compiled.getElementsByTagName('table')).toBeDefined();
         expect(compiled.getElementsByTagName('tr').length).toBe(3);
+        expect(compiled.getElementsByTagName('button').length).toBe(2);
     });
 });

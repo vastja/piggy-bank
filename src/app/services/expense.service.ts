@@ -14,6 +14,7 @@ export abstract class ExpenseService {
 
     abstract getExpenses() : Observable<Expense[]>;
     abstract addExpense(expense : Expense) : Observable<HttpResponse<Expense>>;
+    abstract deleteExpense(id : number) : void;
 }
 
 @Injectable()
@@ -40,12 +41,18 @@ export class RemoteExpenseService extends ExpenseService {
         request.subscribe({ complete: () => this._dataChanged.next()});
         return request;
     }
+
+    public override deleteExpense(id: number): void {
+        this._httpClient.delete(`http://localhost:65368/expenses/${id}`)
+        .subscribe({ complete: () => this._dataChanged.next()});
+        
+    }
 }
 
 @Injectable()
 export class TestExpenseService extends ExpenseService {
 
-    private readonly _expenses : Expense[] = [
+    private _expenses : Expense[] = [
         {
             id: 0,
             tag: 'td-food',
@@ -75,5 +82,10 @@ export class TestExpenseService extends ExpenseService {
         this._expenses.push(expense);
         this._dataChanged.next();
         return of(new HttpResponse<Expense>({body: expense}))
+    }
+
+    public override deleteExpense(id: number): void {
+        this._expenses = this._expenses.filter((expense) => expense.id != id);
+        this._dataChanged.next();
     }
 }

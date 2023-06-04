@@ -26,4 +26,8 @@ export class ExpensesComponent {
     });
   }
 
+  public deleteExpense(id: number) : void {
+    this.expensesService.deleteExpense(id);
+  }
+
 }
