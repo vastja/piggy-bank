@@ -8,5 +8,6 @@
     <tr *ngFor="let expense of expenses">
         <th>{{ expense.tag }}</th>
         <th>{{ expense.amount }}</th>
+        <th><button (click)="deleteExpense(expense.id)">Delete</button></th>
     </tr>
 </table>
