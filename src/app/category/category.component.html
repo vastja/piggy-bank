@@ -1,0 +1,9 @@
+<button (click)="onClick()">
+    <div class="tag">{{ category.tag }}</div>
+    <div class="amount">{{ category.amount }}</div> 
+    <div class="percentage">{{ category.percentage }}</div>
+</button>
+
+<div *ngIf="showDetails">
+    <app-expenses tag="{{ category.tag }}"></app-expenses>
+</div>

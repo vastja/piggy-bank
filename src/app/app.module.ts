@@ -9,13 +9,18 @@ import { ExpensesComponent } from './expense/expenses.component';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddExpenseComponent } from './expense/add-expense.componet';
 import { MenuComponent } from './menu/menu.component';
+import { CategoryService, RemoteCategoryService } from './services/category.service';
+import { SummaryComponent } from './summary/summary.component';
+import { CategoryComponent } from './category/category.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ExpensesComponent,
     AddExpenseComponent,
-    MenuComponent
+    MenuComponent,
+    SummaryComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +31,7 @@ import { MenuComponent } from './menu/menu.component';
   ],
   providers: [
     {provide: ExpenseService, useClass: RemoteExpenseService},
+    {provide: CategoryService, useClass: RemoteCategoryService},
     FormBuilder
   ],
   bootstrap: [AppComponent]

@@ -1,0 +1,18 @@
+button {
+    width: 75%;
+    margin: 1% auto 1% auto;
+    display: flex;
+    flex-direction: row;
+}
+
+.tag {
+    flex: 2
+}
+
+.amount {
+    flex: 2;
+}
+
+.percentage {
+    flex: 1;
+}

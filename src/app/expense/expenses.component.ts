@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Attribute, Component, Input } from '@angular/core';
 import { ExpenseService, Expense } from '../services/expense.service';
+import { ArrayType } from '@angular/compiler';
 
 @Component({
   selector: 'app-expenses',
@@ -8,26 +9,31 @@ import { ExpenseService, Expense } from '../services/expense.service';
 })
 export class ExpensesComponent {
 
-  private expensesService : ExpenseService;
+  private _expensesService : ExpenseService;
 
   public expenses : Expense[] = [];
 
-  constructor(expensesService : ExpenseService) {
-    this.expensesService = expensesService;
-    this.expensesService.dataChanged.subscribe(() => this.getExpenses());
-    this.getExpenses();
+  private _tag  = "";
 
+  @Input() public set tag(value : string)  {
+    this._tag = value;
+    this.getExpenses();
+  }
+
+  constructor(expensesService : ExpenseService) {
+    this._expensesService = expensesService;
+    this._expensesService.dataChanged.subscribe(() => this.getExpenses());
   }
 
   public getExpenses() : void {
-    this.expensesService.getExpenses()
+    this._expensesService.getExpenses(this._tag)
     .subscribe(expenses => {
       this.expenses = expenses;
     });
   }
 
   public deleteExpense(id: number) : void {
-    this.expensesService.deleteExpense(id);
+    this._expensesService.deleteExpense(id);
   }
 
 }
