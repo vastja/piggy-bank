@@ -1,5 +1,5 @@
 import { TestBed } from "@angular/core/testing";
-import { ExpenseService, TestExpenseService } from "../services/expense.service";
+import { ExpenseService, InMemoryExpenseService } from "../services/expense.service";
 import { AddExpenseComponent } from "./add-expense.componet";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
@@ -7,7 +7,7 @@ describe('Add expense component', () => {
     beforeEach(() => TestBed.configureTestingModule({
         imports: [ReactiveFormsModule, FormsModule],
         declarations: [AddExpenseComponent],
-        providers: [{provide: ExpenseService, useClass: TestExpenseService}]
+        providers: [{provide: ExpenseService, useClass: InMemoryExpenseService}]
     }));
     
     it('Should create component', () => {

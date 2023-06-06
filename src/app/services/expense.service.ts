@@ -1,6 +1,7 @@
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, Subject, of } from "rxjs";
+import { inMemoryExpensesData } from "./expenses-data";
 
 export interface Expense {
     id: number,
@@ -12,7 +13,7 @@ export abstract class ExpenseService {
 
     public abstract dataChanged : Observable<void>;
 
-    abstract getExpenses() : Observable<Expense[]>;
+    abstract getExpenses(ag : string | null) : Observable<Expense[]>;
     abstract addExpense(expense : Expense) : Observable<HttpResponse<Expense>>;
     abstract deleteExpense(id : number) : void;
 }
@@ -32,8 +33,14 @@ export class RemoteExpenseService extends ExpenseService {
         this.dataChanged = this._dataChanged.asObservable();
     }
 
-    public getExpenses() : Observable<Expense[]> {
-        return this._httpClient.get<Expense[]>('http://localhost:65368/expenses');
+    public getExpenses(tag : string | null) : Observable<Expense[]> {
+        
+        let filter = "";
+        if (tag != null) {
+            filter = `?tag=${tag}`;
+        }
+
+        return this._httpClient.get<Expense[]>(`http://localhost:65368/expenses${filter}`);
     }
 
     public override addExpense(expense: Expense): Observable<HttpResponse<Expense>> {
@@ -50,42 +57,35 @@ export class RemoteExpenseService extends ExpenseService {
 }
 
 @Injectable()
-export class TestExpenseService extends ExpenseService {
-
-    private _expenses : Expense[] = [
-        {
-            id: 0,
-            tag: 'td-food',
-            amount: 125
-        },
-        {
-            id: 1,
-            tag: 'td-travel',
-            amount: 100
-        }
-    ]
+export class InMemoryExpenseService extends ExpenseService {
 
     private _dataChanged = new Subject<void>();
     
     public dataChanged : Observable<void>; 
 
+    public data : Expense[];
+
     constructor() {
         super();
         this.dataChanged = this._dataChanged.asObservable();
+        this.data = inMemoryExpensesData;
     }
 
-    public getExpenses() : Observable<Expense[]> {
-        return of(this._expenses);
+    public getExpenses(tag : string | null) : Observable<Expense[]> {
+        if (tag != null) {
+            return of(this.data.filter(e => e.tag == tag));
+        }
+        return of(this.data);
     }
 
     public override addExpense(expense: Expense): Observable<HttpResponse<Expense>> {
-        this._expenses.push(expense);
+        this.data.push(expense);
         this._dataChanged.next();
         return of(new HttpResponse<Expense>({body: expense}))
     }
 
     public override deleteExpense(id: number): void {
-        this._expenses = this._expenses.filter((expense) => expense.id != id);
+        this.data.filter((expense) => expense.id != id);
         this._dataChanged.next();
     }
 }
