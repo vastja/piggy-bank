@@ -1,13 +1,9 @@
 import { readdirSync, existsSync, readFileSync } from "fs";
 import { join } from "path";
 import { parseCSVLine, CSVParseError } from "./simple-csv-parser";
+import { Database } from "./database";
+import type { Expense } from "./database";
 import assert from "assert";
-
-interface FinanceRecord {
-  timestamp: string;
-  amount: string;
-  category: string;
-}
 
 const args = process.argv.slice(2);
 
@@ -25,22 +21,26 @@ if (!existsSync(folderPath)) {
   process.exit(1);
 }
 
-const allRecords = parseFinanceRecords(folderPath);
+const allRecords = parseExpenses(folderPath);
 
-function parseFinanceRecords(folderPath: string): FinanceRecord[] {
-  const records: FinanceRecord[] = [];
+const db = new Database();
+db.insertExpenses(allRecords);
+db.close();
+
+function parseExpenses(folderPath: string): Expense[] {
+  const expenses: Expense[] = [];
   const filePattern = /^(0[1-9]|1[0-2])_\d{4}\.csv$/;
   const files = readdirSync(folderPath);
   const csvFiles = files.filter(file => filePattern.test(file));
 
-  console.log(`Found ${csvFiles.length} finance record file(s)`);
 
   csvFiles.forEach(file => {
+    console.log(`Parsing '${file}' expenses file`);
     const filePath = join(folderPath, file);
     const content = readFileSync(filePath, "utf-8");
-    const lines = content.trim().split("\n");
+    const lines = content.trim().split(/\r?\n/);
 
-    // Skip title row (Seznam výdaje...) and header row (Datum a čas,Kategorie,...)
+    // Skip title row and header row
     const dataLines = lines.slice(2);
 
     dataLines.forEach((line, lineIndex) => {
@@ -54,7 +54,7 @@ function parseFinanceRecords(folderPath: string): FinanceRecord[] {
         const amount = columns[3]?.trim().replace(",", ".");
 
         if (timestamp && category && amount) {
-          records.push({
+          expenses.push({
             timestamp,
             amount,
             category
@@ -70,5 +70,5 @@ function parseFinanceRecords(folderPath: string): FinanceRecord[] {
     });
   });
 
-  return records;
+  return expenses;
 }
