@@ -8,12 +8,12 @@ services:
       - "3000:3000"
     volumes:
       - ./piggy-bank.db:/var/lib/grafana/piggy-bank.db:ro
-      - grafana-storage:/var/lib/grafana
+      - ./grafana/data:/var/lib/grafana
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
     environment:
       - GF_INSTALL_PLUGINS=frser-sqlite-datasource
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
     restart: unless-stopped
 
-volumes:
-  grafana-storage:
